@@ -1,0 +1,22 @@
+const mongoose = require('mongoose');
+
+// Connection string
+const MONG_URI = 'mongodb://localhost:27017/BooksData';
+
+// Connect to MongoDB
+mongoose.connect(MONG_URI, {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+})
+  .then(() => console.log('Connected to MongoDB successfully!'))
+  .catch((err) => console.error('Error connecting to MongoDB:', err));
+
+// Event listeners
+const db = mongoose.connection;
+db.on('error', (err) => console.error('Error occurred:', err));
+db.once('connected', () => {
+  console.log('Mongoose version:', mongoose.version);
+  console.log('Database connection is successful!');
+});
+
+module.exports = db;
